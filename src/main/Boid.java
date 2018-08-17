@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -106,7 +107,7 @@ public class Boid extends Entity {
 		}
 
 		/* SPATIAL HASHING */
-		if(Loop.TYPE == Loop.CHECK_TYPE.HASH) {
+		else if(Loop.TYPE == Loop.CHECK_TYPE.HASH) {
 			Set<ArrayList<Boid>> toProcess = new HashSet<>();
 
 			LinkedList<ArrayList<Boid>> toAdd = new LinkedList<>();
@@ -118,6 +119,29 @@ public class Boid extends Entity {
 			toProcess.add(BOID_HASH.get(pos.add(-COMPONENT, -COMPONENT)));
 
 			for(ArrayList<Boid> boids : toProcess) {
+
+				for(Boid b : boids) {
+
+					if(b == this) continue;
+
+					if(distance(b) < NEIGHBOR_RADIUS_THRESHOLD) {
+						toRet.add(b);
+					}
+				}
+			}
+		}
+		
+		/* QuadTree */
+		else if(Loop.TYPE == Loop.CHECK_TYPE.QUAD) {
+			Set<List<Boid>> toProcess = new HashSet<>();
+			
+			toProcess.add(BOID_TREE.get(pos));
+			toProcess.add(BOID_TREE.get(pos.add(COMPONENT, COMPONENT)));
+			toProcess.add(BOID_TREE.get(pos.add(COMPONENT, -COMPONENT)));
+			toProcess.add(BOID_TREE.get(pos.add(-COMPONENT, COMPONENT)));
+			toProcess.add(BOID_TREE.get(pos.add(-COMPONENT, -COMPONENT)));
+			
+			for(List<Boid> boids : toProcess) {
 
 				for(Boid b : boids) {
 

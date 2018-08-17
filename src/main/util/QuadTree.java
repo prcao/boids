@@ -76,6 +76,18 @@ public class QuadTree<E extends Entity> {
 	public List<E> get(Entity entity) {
 		return get(entity, new ArrayList<E>(), root);
 	}
+	
+	public List<E> get(Vector pos) {
+		return get(pos, new ArrayList<E>(), root);
+	}
+	
+	private List<E> get(Vector pos, List<E> toReturn, Node current) {
+		if(current.quads[0] == null) {
+			return current.entities;
+		}
+		
+		return get(pos, toReturn, (Node)current.quads[current.determineQuadrant(pos)]);
+	}
 
 	private List<E> get(Entity entity, List<E> toReturn, Node current) {
 

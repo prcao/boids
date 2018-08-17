@@ -10,7 +10,7 @@ public class Loop implements Runnable {
 
 
 	public enum CHECK_TYPE {
-		BRUTE, HASH;
+		BRUTE, HASH, QUAD;
 	}
 
 	public static final CHECK_TYPE TYPE = CHECK_TYPE.HASH;
@@ -104,6 +104,13 @@ public class Loop implements Runnable {
 
 		}
 		
+		else if(TYPE == TYPE.QUAD) {
+			Boid.BOID_TREE.clear();
+			
+			for(Boid b : Boid.ALL_BOIDS)
+				Boid.BOID_TREE.insert(b);
+		}
+		
 		for(Boid b : Boid.ALL_BOIDS)
 			b.tick(delta);
 
@@ -155,7 +162,7 @@ public class Loop implements Runnable {
 
 		Random r = new Random();
 
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 500; i++){
 			new Boid(r.nextInt(width), r.nextInt(height));
 		}
 	}
