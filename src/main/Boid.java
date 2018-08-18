@@ -48,7 +48,7 @@ public class Boid extends Entity {
 		width = SIZE;
 		height = SIZE;
 
-		vel = new Vector(RNG.nextInt(DEFAULT_SPEED + 1) - (DEFAULT_SPEED/2), RNG.nextInt(DEFAULT_SPEED + 1) - (DEFAULT_SPEED/2));
+		vel = new Vector(RNG.nextInt(DEFAULT_SPEED) - (DEFAULT_SPEED/2), RNG.nextInt(DEFAULT_SPEED) - (DEFAULT_SPEED/2));
 		ALL_BOIDS.add(this);
 	}
 
